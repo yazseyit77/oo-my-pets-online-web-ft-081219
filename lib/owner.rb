@@ -1,15 +1,14 @@
 class Owner
   # code goes here
-  attr_reader :species, :name
+  attr_reader :name, :species
+  attr_accessor :pets, :dog, :cat
   @@all = []
-  @@count = 0
 
   def initialize(name)
     @species = "human"
     @name = name
-    save
-    @@count += 1
-    @pets = {:dogs => [], :cats => [] }
+    @@all << self
+    # @@pets = {dogs: [], cats: [] }
   end
 
   def say_species
@@ -25,12 +24,16 @@ class Owner
   end
 
   def self.count
-    @@count
+    @@all.length
   end
 
   def self.reset_all
     @@all.clear
   end
+
+  # def pets
+  #   @@pets
+  # end
 
   def cats
     Cat.all.select {|cat| cat.owner == self}
@@ -41,25 +44,32 @@ class Owner
   end
 
   def buy_cat(name)
-    cat = Cat.new(name)
-    @pets[:cats] << cat
+    Cat.new(name, self)
   end
 
-  def buy_dog(doggo)
-    dog = Dog.new(doggo)
-    @pets[:dogs] << dog
+  def buy_dog(name)
+    Dog.new(name, self)
   end
 
   def walk_dogs
-    @pets[:dogs].each {|o| o.mood = "happy"}
+   self.dogs.each do |walked|
+     walked.mood = "happy"
+   end
   end
 
   def feed_cats
-    self.pets[:cats].each {|cat| cat.mood = "happy"}
+    self.cats.each {|cat| cat.mood = "happy"}
   end
 
   def list_pets
-    "I have #{@pets[:dogs].size} dog(s), and #{@pets[:cats].size} cat(s)."
+    "I have #{dogs.size} dog(s), and #{cats.size} cat(s)."
   end
 
+  def sell_pets
+    @pets = self.dogs + self.cats
+    self.pets.each do |pet|
+        pet.mood = "nervous"
+        pet.owner = nil
+      end
+  end
 end
