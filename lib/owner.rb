@@ -8,7 +8,11 @@ class Owner
     @species = "human"
     @name = name
     @@all << self
+<<<<<<< HEAD
     # @@pets = {dogs: [], cats: [] }
+=======
+    @@pets = {dogs: [], cats: [] }
+>>>>>>> 8c2a36eaa6c3cd9200c606426bdf79ca1284bc0a
   end
 
   def say_species
@@ -31,9 +35,15 @@ class Owner
     @@all.clear
   end
 
+<<<<<<< HEAD
   # def pets
   #   @@pets
   # end
+=======
+  def pets
+    @@pets
+  end
+>>>>>>> 8c2a36eaa6c3cd9200c606426bdf79ca1284bc0a
 
   def cats
     Cat.all.select {|cat| cat.owner == self}
@@ -63,6 +73,18 @@ class Owner
 
   def list_pets
     "I have #{dogs.size} dog(s), and #{cats.size} cat(s)."
+<<<<<<< HEAD
+=======
+  end
+
+  def sell_pets
+    pets.each do |type, pets|
+      pets.each do |pet|
+        pet.mood = "nervous"
+      end
+      pets.owner.clear
+    end
+>>>>>>> 8c2a36eaa6c3cd9200c606426bdf79ca1284bc0a
   end
 
   def sell_pets
